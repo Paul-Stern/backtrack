@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/rs/zerolog/log"
@@ -41,4 +42,25 @@ func (t *Task) Add() (err error) {
 	}
 	log.Info().Interface("t", t).Msg("Task added")
 	return err
+}
+
+func (t *Task) EstimatedTime() (dur time.Duration, err error) {
+	ctx := context.Background()
+	if t.ID <= 1 {
+		return 0, nil
+	}
+	pt, err := gorm.G[Task](DB).Where("ID = ?", t.ID-1).First(ctx)
+	if err != nil {
+		// log.Error().Err(err).Caller().Msg("Failed to get previous task")
+		return 0, err
+	}
+	return t.TimeFinished.Sub(pt.TimeFinished).Round(time.Second), err
+}
+
+func (t *Task) String() string {
+	et, err := t.EstimatedTime()
+	if err != nil {
+		return t.Message
+	}
+	return fmt.Sprintf("%s\t%s", et.String(), t.Message)
 }
