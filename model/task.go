@@ -44,7 +44,7 @@ func (t *Task) Add() (err error) {
 	return err
 }
 
-func (t *Task) EstimatedTime() (dur time.Duration, err error) {
+func (t *Task) Duration() (dur time.Duration, err error) {
 	ctx := context.Background()
 	if t.ID <= 1 {
 		return 0, nil
@@ -58,7 +58,7 @@ func (t *Task) EstimatedTime() (dur time.Duration, err error) {
 }
 
 func (t *Task) String() string {
-	et, err := t.EstimatedTime()
+	et, err := t.Duration()
 	if err != nil {
 		return t.Message
 	}
