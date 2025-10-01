@@ -8,9 +8,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "backtrack",
 	Short: "backtrack is a simple post-factum tracker",
-	Run: func(cmd *cobra.Command, args []string) {
-		// log.Info().Interface("args", args)
-	},
+	Args:  cobra.MinimumNArgs(1),
 }
 
 func init() {
