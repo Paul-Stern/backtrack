@@ -24,7 +24,7 @@ bin-version: build
 # For production builds
 release: build
 	@echo "Creating release $(VERSION)-$(COMMIT_HASH)"
-	tar czf $(ARC_NAME).tar.gz $(APP_NAME) prettylog templates
+	tar czf $(ARC_NAME).tar.gz $(APP_NAME) prettylog
 
 # For development (without version info)
 dev:
