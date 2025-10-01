@@ -15,6 +15,7 @@ func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(listCmd)
+	// rootCmd.AddCommand(installCompletionsCmd)
 
 }
 
