@@ -10,13 +10,13 @@ import (
 
 type Tasks []Task
 
-func GetTasks() Tasks {
+func GetTasks(limit int) Tasks {
 	if DB == nil {
 		log.Info().Msg("DB is nil")
 		return nil
 	}
 	ctx := context.Background()
-	tasks, err := gorm.G[Task](DB).Find(ctx)
+	tasks, err := gorm.G[Task](DB).Order("ID desc").Limit(limit).Find(ctx)
 	if err != nil {
 		log.Error().Err(err).Caller().Msg("Failed to list tasks")
 	}
