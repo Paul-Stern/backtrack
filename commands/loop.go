@@ -26,7 +26,7 @@ func MainLoop() {
 	// if err := app.SetRoot(l, true).SetFocus(l).Run(); err != nil {
 	// 	log.Panic().Err(err)
 	// }
-	if err := app.Run(); err != nil {
+	if err := app.SetRoot(app.Main, true).SetFocus(app.Main).Run(); err != nil {
 		log.Panic().Err(err)
 	}
 }

@@ -30,3 +30,7 @@ func (a *App) Run() error {
 
 	return a.Application.Run()
 }
+
+func (a *App) UpdateTasks() {
+	a.Main.Pages.GetPage("list").(*ui.TaskView).Update()
+}

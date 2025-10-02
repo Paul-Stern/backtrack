@@ -1,6 +1,8 @@
 package ui
 
-import "github.com/rivo/tview"
+import (
+	"github.com/rivo/tview"
+)
 
 type App struct {
 	*tview.Application
@@ -19,5 +21,11 @@ func NewApp() *App {
 		"list":  NewTaskView(&a),
 		"input": NewTaskInputField(&a),
 	}
+	a.Main.AddPage("list", a.views["list"], true, true)
+	a.Main.AddPage("input", a.views["input"], true, false)
 	return &a
+}
+
+func (a *App) UpdateTasks() {
+	a.Main.GetPage("list").(*TaskView).Update()
 }
