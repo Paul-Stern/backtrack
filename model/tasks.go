@@ -33,12 +33,17 @@ func Today() Tasks {
 	// get Today's date
 	y, m, d := time.Now().Date()
 	midnight := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
+
+	return Since(midnight)
+}
+
+func Since(t time.Time) Tasks {
 	if DB == nil {
 		log.Info().Msg("DB is nil")
 		return nil
 	}
 	ctx := context.Background()
-	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", midnight).Order("ID desc").Find(ctx)
+	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", t).Order("ID desc").Find(ctx)
 	if err != nil {
 		log.Error().Err(err).Caller().Msg("Failed to list tasks")
 	}
@@ -47,7 +52,6 @@ func Today() Tasks {
 		return nil
 	}
 	return tasks
-
 }
 
 func (t Tasks) String() string {
