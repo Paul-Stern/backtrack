@@ -29,6 +29,23 @@ func GetTasks(limit int) Tasks {
 	return tasks
 }
 
+func GetAll() Tasks {
+	if DB == nil {
+		log.Info().Msg("DB is nil")
+		return nil
+	}
+	ctx := context.Background()
+	tasks, err := gorm.G[Task](DB).Find(ctx)
+	if err != nil {
+		log.Error().Err(err).Caller().Msg("Failed to list tasks")
+	}
+	if tasks == nil {
+		log.Info().Msg("No tasks found")
+		return nil
+	}
+	return tasks
+}
+
 func Today() Tasks {
 	// get Today's date
 	y, m, d := time.Now().Date()

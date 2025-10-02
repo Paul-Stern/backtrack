@@ -22,6 +22,7 @@ var listCmd = &cobra.Command{
 func init() {
 	listCmd.AddCommand(todayCmd)
 	listCmd.AddCommand(sinceCmd)
+	listCmd.AddCommand(allCmd)
 }
 
 var todayCmd = &cobra.Command{
@@ -41,5 +42,14 @@ var sinceCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		t := model.TryParseTime(args[0])
 		fmt.Println(model.Since(t).String())
+	},
+}
+
+var allCmd = &cobra.Command{
+	Use:   "all",
+	Short: "lists journal entries for today",
+	Args:  cobra.MatchAll(cobra.ExactArgs(0)),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(model.GetAll().String())
 	},
 }
