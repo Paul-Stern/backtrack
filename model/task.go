@@ -62,5 +62,10 @@ func (t *Task) String() string {
 	if err != nil {
 		return t.Message
 	}
-	return fmt.Sprintf("%d\t%s\t\t%s\t%s", t.ID, et.String(), t.TimeFinished.Round(time.Second), t.Message)
+	return fmt.Sprintf(
+		"%d\t%s\t\t%s\t%s",
+		t.ID,
+		et.String(),
+		t.TimeFinished.Round(time.Second).Format(time.DateTime),
+		t.Message)
 }
