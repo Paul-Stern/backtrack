@@ -7,6 +7,22 @@ type App struct {
 	Content *PageStack
 }
 
+func NewApp() *App {
+	return &App{
+		App:     ui.NewApp(),
+		Content: NewPageStack(),
+	}
+}
+
+func (a *App) QueueUpdateDraw(f func()) {
+	if a.Application == nil {
+		return
+	}
+	go func() {
+		a.Application.QueueUpdateDraw(f)
+	}()
+}
+
 func (a *App) Run() error {
 	func() {
 		a.Main.SwitchToPage("list")

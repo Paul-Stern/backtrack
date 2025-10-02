@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/Paul-Stern/backtrack/ui"
+	"github.com/Paul-Stern/backtrack/view"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -21,10 +21,12 @@ func init() {
 func MainLoop() {
 	// main loop
 	// app := tview.NewApplication()
-	app := ui.NewApp()
-	l := ui.NewTaskView(app)
+	app := view.NewApp()
 	// box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
-	if err := app.SetRoot(l, true).SetFocus(l).Run(); err != nil {
+	// if err := app.SetRoot(l, true).SetFocus(l).Run(); err != nil {
+	// 	log.Panic().Err(err)
+	// }
+	if err := app.Run(); err != nil {
 		log.Panic().Err(err)
 	}
 }
