@@ -32,5 +32,5 @@ func (a *App) Run() error {
 }
 
 func (a *App) UpdateTasks() {
-	a.Main.Pages.GetPage("list").(*ui.TaskView).Update()
+	a.Main.Pages.GetPage("list").(*ui.TaskList).Update()
 }

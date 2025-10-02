@@ -18,7 +18,7 @@ func NewApp() *App {
 	}
 
 	a.views = map[string]tview.Primitive{
-		"list":  NewTaskView(&a),
+		"list":  NewTaskList(&a),
 		"input": NewTaskInputField(&a),
 	}
 	a.Main.AddPage("list", a.views["list"], true, true)
@@ -27,5 +27,5 @@ func NewApp() *App {
 }
 
 func (a *App) UpdateTasks() {
-	a.Main.GetPage("list").(*TaskView).Update()
+	a.Main.GetPage("list").(*TaskList).Update()
 }

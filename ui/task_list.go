@@ -5,15 +5,15 @@ import (
 	"github.com/rivo/tview"
 )
 
-type TaskView struct {
+type TaskList struct {
 	*tview.List
 	app *App
 
 	Items model.Tasks
 }
 
-func NewTaskView(app *App) *TaskView {
-	tv := TaskView{
+func NewTaskList(app *App) *TaskList {
+	tv := TaskList{
 		Items: model.GetTasks(10),
 		app:   app,
 	}
@@ -27,14 +27,14 @@ func NewTaskView(app *App) *TaskView {
 	return &tv
 }
 
-func (t *TaskView) Update() {
+func (t *TaskList) Update() {
 	t.Clear()
 	t.Items = model.GetTasks(10)
 	t.List = t.Items.List()
 	t.AddMenu()
 }
 
-func (t *TaskView) AddMenu() {
+func (t *TaskList) AddMenu() {
 	t.AddItem("Add", "Add a new task", 'a', func() {
 		t.app.Main.SwitchToPage("input")
 	})
@@ -43,12 +43,12 @@ func (t *TaskView) AddMenu() {
 	})
 }
 
-func (t *TaskView) QuitItem() {
+func (t *TaskList) QuitItem() {
 	t.AddItem("Quit", "Press to exit", 'q', func() {
 		t.app.Stop()
 	})
 }
-func (t *TaskView) AddMenuItem() {
+func (t *TaskList) AddMenuItem() {
 	t.AddItem("Add", "Add a new task", 'a', func() {
 		t.app.Main.SwitchToPage("input")
 	})
