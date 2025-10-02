@@ -31,13 +31,14 @@ func GetTasks(limit int) Tasks {
 
 func Today() Tasks {
 	// get Today's date
-	td := time.Now().Round(time.Hour)
+	y, m, d := time.Now().Date()
+	midnight := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
 	if DB == nil {
 		log.Info().Msg("DB is nil")
 		return nil
 	}
 	ctx := context.Background()
-	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", td).Order("ID desc").Limit(10).Find(ctx)
+	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", midnight).Order("ID desc").Find(ctx)
 	if err != nil {
 		log.Error().Err(err).Caller().Msg("Failed to list tasks")
 	}

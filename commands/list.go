@@ -10,8 +10,24 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "lists journal entries",
+	Args:  cobra.RangeArgs(0, 1),
+	Run: func(cmd *cobra.Command, args []string) {
+		// if len(args) > 0 {
+		// 	cmd.ValidateArgs(args)
+		// }
+		fmt.Println(model.GetTasks(10).String())
+	},
+}
+
+func init() {
+	listCmd.AddCommand(todayCmd)
+}
+
+var todayCmd = &cobra.Command{
+	Use:   "today",
+	Short: "lists journal entries for today",
 	Args:  cobra.MatchAll(cobra.ExactArgs(0)),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(model.GetTasks(10).String())
+		fmt.Println(model.Today().String())
 	},
 }
