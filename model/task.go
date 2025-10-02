@@ -60,12 +60,12 @@ func (t *Task) Duration() (dur time.Duration, err error) {
 func (t *Task) String() string {
 	et, err := t.Duration()
 	if err != nil {
-		return t.Message
+		return ""
 	}
 	return fmt.Sprintf(
 		"%d\t%s\t\t%s\t%s",
 		t.ID,
-		et.String(),
+		et,
 		t.TimeFinished.Round(time.Second).Format(time.DateTime),
 		t.Message)
 }

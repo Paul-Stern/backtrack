@@ -43,7 +43,7 @@ func Since(t time.Time) Tasks {
 		return nil
 	}
 	ctx := context.Background()
-	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", t).Order("ID desc").Find(ctx)
+	tasks, err := gorm.G[Task](DB).Where("time_finished >= ?", t).Find(ctx)
 	if err != nil {
 		log.Error().Err(err).Caller().Msg("Failed to list tasks")
 	}
