@@ -34,9 +34,10 @@ var todayCmd = &cobra.Command{
 }
 
 var sinceCmd = &cobra.Command{
-	Use:   "since",
-	Short: "lists journal entries since",
-	Args:  cobra.MatchAll(cobra.ExactArgs(1)),
+	Use:     "since",
+	Short:   "lists journal entries since date",
+	Example: "backtrack since 2022-01-14\nbacktrack since $(date -d '20220114' -I)",
+	Args:    cobra.MatchAll(cobra.ExactArgs(1)),
 	Run: func(cmd *cobra.Command, args []string) {
 		t := model.TryParseTime(args[0])
 		fmt.Println(model.Since(t).String())
