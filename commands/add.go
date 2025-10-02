@@ -11,22 +11,24 @@ import (
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "adds journal entry",
-	// Args:  cobra.MatchAll(cobra.ExactArgs(1)),
 	Run: func(cmd *cobra.Command, args []string) {
-		// log.Info().Interface("args", args)
-
-		b := strings.Builder{}
-		for i, arg := range args {
-			if i > 0 {
-				b.WriteString(" ")
-			}
-			b.WriteString(arg)
-		}
-		msg := b.String()
-
-		t := model.NewTask(msg)
-		if err := t.Add(); err != nil {
-			log.Fatal().Err(err).Msg("Failed to add task")
-		}
+		Add(args)
 	},
+}
+
+func Add(args []string) {
+	b := strings.Builder{}
+	for i, arg := range args {
+		if i > 0 {
+			b.WriteString(" ")
+		}
+		b.WriteString(arg)
+	}
+	msg := b.String()
+
+	t := model.NewTask(msg)
+	if err := t.Add(); err != nil {
+		log.Fatal().Err(err).Msg("Failed to add task")
+	}
+
 }
