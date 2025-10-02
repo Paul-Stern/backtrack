@@ -17,14 +17,23 @@ build:
 		-o $(APP_NAME) ./cmd/$(APP_NAME)
 	go build -o prettylog $(PLOG_PATH)
 
+build-win:
+	@echo "Building $(APP_NAME) version $(VERSION)"
+	GOOS=windows GOARCH=amd64 go build -ldflags="\
+		-X '$(GO_PACKAGE_PATH)/version.Version=$(VERSION)' \
+		-X '$(GO_PACKAGE_PATH)/version.Commit=$(COMMIT_HASH)' \
+		-X '$(GO_PACKAGE_PATH)/version.BuildTime=$(BUILD_TIME)'" \
+		-o $(APP_NAME).exe ./cmd/$(APP_NAME)
+	GOOS=windows GOARCH=amd64 go build -o prettylog.exe $(PLOG_PATH)
+
 bin-version: build
 	@echo "$(APP_NAME) --version"
 	./$(APP_NAME) --version
 
 # For production builds
-release: build
+release: build build-win
 	@echo "Creating release $(VERSION)-$(COMMIT_HASH)"
-	tar czf $(ARC_NAME).tar.gz $(APP_NAME) prettylog
+	tar czf $(ARC_NAME).tar.gz $(APP_NAME) $(APP_NAME).exe prettylog.exe prettylog
 
 # For development (without version info)
 dev:
