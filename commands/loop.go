@@ -1,8 +1,7 @@
 package commands
 
 import (
-	"github.com/Paul-Stern/backtrack/model"
-	"github.com/rivo/tview"
+	"github.com/Paul-Stern/backtrack/ui"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -21,11 +20,9 @@ func init() {
 
 func MainLoop() {
 	// main loop
-	app := tview.NewApplication()
-	l := model.GetTasks(10).List()
-	l.AddItem("Quit", "Press to exit", 'q', func() {
-		app.Stop()
-	})
+	// app := tview.NewApplication()
+	app := ui.NewApp()
+	l := ui.NewTaskView(app)
 	// box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
 	if err := app.SetRoot(l, true).SetFocus(l).Run(); err != nil {
 		log.Panic().Err(err)
