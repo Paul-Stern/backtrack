@@ -14,6 +14,9 @@ func InitDB() (err error) {
 		log.Panic().Err(err).Msg("failed to connect to database")
 	}
 
-	DB.AutoMigrate(&Task{})
+	err = DB.AutoMigrate(&Task{})
+	if err != nil {
+		log.Panic().Err(err).Msg("failed to migrate database")
+	}
 	return nil
 }
